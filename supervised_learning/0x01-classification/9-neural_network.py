@@ -5,11 +5,7 @@ import numpy as np
 
 
 class NeuralNetwork:
-    """
-    NeuralNetwork class
-    defines a neural network with one hidden layer
-    performing binary classification
-    """
+    """NeuralNetwork class"""
 
     def __init__(self, nx, nodes):
         """
@@ -25,56 +21,50 @@ class NeuralNetwork:
             raise TypeError("nodes must be an integer")
         if nodes < 1:
             raise ValueError("nodes must be a positive integer")
-        """The weights vector for the hidden layer. Upon instantiation,
-            it should be initialized using a random normal distribution"""
+        """The weights vector for the hidden layer"""
         self.__W1 = np.random.normal(0, 1, (nodes, nx))
 
-        """The bias for the hidden layer. Upon instantiation,
-            it should be initialized with 0’s"""
+        """The bias for the hidden layer"""
         self.__b1 = np.zeros((nodes, 1))
 
-        """The activated output for the hidden layer. Upon instantiation,
-            it should be initialized to 0"""
+        """The activated output for the hidden layer"""
         self.__A1 = 0
 
-        """The weights vector for the output neuron. Upon instantiation,
-            it should be initialized using a random normal distribution"""
+        """The weights vector for the output neuron"""
         self.__W2 = np.random.normal(0, 1, (1, nodes))
 
-        """The bias for the output neuron. Upon instantiation,
-            it should be initialized to 0"""
+        """The bias for the output neuron"""
         self.__b2 = 0
 
-        """The activated output for the output neuron (prediction).
-            Upon instantiation, it should be initialized to 0"""
+        """The activated output for the output neuron"""
         self.__A2 = 0
 
     @property
     def W1(self):
-        """property to retrieve W1"""
+        """weigths to retrieve W1"""
         return self.__W1
 
     @property
     def b1(self):
-        """property to retrieve b1"""
+        """bias to retrieve b1"""
         return self.__b1
 
     @property
     def A1(self):
-        """property to retrieve A1"""
+        """activation to retrieve A1"""
         return self.__A1
 
     @property
     def W2(self):
-        """property to retrieve W2"""
+        """weights to retrieve W2"""
         return self.__W2
 
     @property
     def b2(self):
-        """property to retrieve b2"""
+        """bias to retrieve b2"""
         return self.__b2
 
     @property
     def A2(self):
-        """property to retrieve A2"""
+        """activation to retrieve A2"""
         return self.__A2
