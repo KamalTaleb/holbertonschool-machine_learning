@@ -4,7 +4,7 @@
 import numpy as np
 
 
-
+# Miscellaneous functions
 def sigmoid(Z):
     """sigmoid function"""
     return 1.0 / (1.0 + np.exp(-Z))
