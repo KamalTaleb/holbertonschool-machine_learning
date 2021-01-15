@@ -1,65 +1,50 @@
 #!/usr/bin/env python3
-"""Contains the Neuron class"""
-
+"""Evaluates the neuron’s prediction"""
 import numpy as np
 
 
-# Miscellaneous functions
-def sigmoid(Z):
-    """sigmoid fc"""
-    return 1.0 / (1.0 + np.exp(-Z))
-
-
 class Neuron:
-    """the number of input features to the neuron"""
-
+    """Neuron class"""
     def __init__(self, nx):
-        """constructor"""
+        """Defines a single neuron performing binary classification"""
         if not isinstance(nx, int):
-            raise TypeError("nx must be an integer")
+            raise TypeError("nx must be a integer")
         if nx < 1:
-            raise ValueError("nx must be a positive integer")
+            raise ValueError("nx must be positive")
 
-        """The weights vector for the neuron"""
-        self.__W = np.random.normal(0, 1, (1, nx))
-
-        """The bias for the neuron"""
+        self.__W = np.random.normal(size=(nx, 1))
         self.__b = 0
-
-        """The activated output of the neuron"""
         self.__A = 0
 
     @property
     def W(self):
-        """property to retrieve it"""
+        """Weights"""
         return self.__W
 
     @property
     def b(self):
-        """property to retrieve it"""
+        """Bias"""
         return self.__b
 
     @property
     def A(self):
-        """property to retrieve it"""
+        """Activation"""
         return self.__A
 
     def forward_prop(self, X):
         """Calculates the forward propagation of the neuron"""
-        Z = np.matmul(self.__W, X) + self.__b
-        """self.__A = 1 / (1 + np.exp(-Z)). we need to use the sigmoid function"""
-        self.__A = sigmoid(Z)
+        z = np.dot(self.__W.T, X)
+        self.__A = 1/(1+np.exp(-z))
         return self.__A
 
     def cost(self, Y, A):
         """Calculates the cost of the model using logistic regression"""
-        cost = -np.sum((Y * np.log(A)) +
-                       ((1 - Y) * np.log(1.0000001 - A))) / Y.shape[1]
+        cost = (-Y * np.log(A) - (1 - Y) * np.log(1 - A)).mean()
         return cost
 
     def evaluate(self, X, Y):
         """Evaluates the neuron’s predictions"""
         A = self.forward_prop(X)
         cost = self.cost(Y, A)
-        pred_labels = np.where(self.__A >= 0.5, 1, 0)
+        pred_labels = np.where(A >= 0.5, 1, 0)
         return pred_labels, cost
