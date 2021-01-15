@@ -58,8 +58,8 @@ class Neuron:
         return cost
 
     def evaluate(self, X, Y):
-        """Evaluates the neuron’s predictions X is a numpy"""
-        self.forward_prop(X)
-        A = np.where(self.__A >= 0.5, 1, 0)
-        cost = self.cost(Y, self.__A)
-        return A, cost
+        """Evaluates the neuron’s predictions"""
+        A = self.forward_prop(X)
+        cost = self.cost(Y, A)
+        pred_labels = np.where(self.__A >= 0.5, 1, 0)
+        return pred_labels, cost
