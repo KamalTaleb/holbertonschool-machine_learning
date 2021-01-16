@@ -13,14 +13,11 @@ class DeepNeuralNetwork:
     performing binary classification:
     """
 
-    def __init__(self, nx, layers, activation='sig'):
+    def __init__(self, nx, layers):
         """
         Class constructor
         :param nx: the number of input features
         :param layers: list representing the number of nodes
-        :param activation: type of activation func used in the hidden layers
-            sig a sigmoid activation
-            tanh a tanh activation
         in each layer of the network
         """
         if not isinstance(nx, int):
@@ -31,12 +28,9 @@ class DeepNeuralNetwork:
             raise TypeError("layers must be a list of positive integers")
         if len(layers) == 0:
             raise TypeError('layers must be a list of positive integers')
-        if activation != 'sig' and activation != 'tanh':
-            raise ValueError("activation must be 'sig' or 'tanh'")
         self.nx = nx
         self.layers = layers
         self.__L = len(layers)
-        self.__activation = activation
         self.__cache = {}
         self.__weights = {}
 
@@ -71,11 +65,6 @@ class DeepNeuralNetwork:
         """property to retrieve A1"""
         return self.__weights
 
-    @property
-    def activation(self):
-        """ type of activation function used in the hidden layers """
-        return self.__activation
-
     def forward_prop(self, X):
         """
         Calculates the forward propagation of the neural network
@@ -94,15 +83,12 @@ class DeepNeuralNetwork:
 
             Z = np.matmul(self.__weights[W_key], self.__cache[A_key_prev]) \
                 + self.__weights[b_key]
-            if i != self.__L - 1:
-                if self.__activation == 'sig':
-                    self.__cache[A_key_forw] = 1 / (1 + np.exp(-Z))
-                else:
-                    self.__cache[A_key_forw] = np.tanh(Z)
-            else:
+            if i == self.__L - 1:
                 t = np.exp(Z)
-                self.__cache[A_key_forw] = (t / np.sum(t,
-                                                       axis=0, keepdims=True))
+                self.__cache[A_key_forw] = (t/np.sum(t, axis=0, keepdims=True))
+            else:
+                self.__cache[A_key_forw] = 1 / (1 + np.exp(-Z))
+
         return self.__cache[A_key_forw], self.__cache
 
     def cost(self, Y, A):
@@ -114,8 +100,7 @@ class DeepNeuralNetwork:
         containing the activated output of the neuron for each example
         :return: the cost
         """
-        m = Y.shape[1]
-        return -(1/m) * np.sum(Y * np.log(A))
+        return (-1 / (Y.shape[1])) * np.sum(Y * np.log(A))
 
     def evaluate(self, X, Y):
         """
@@ -152,11 +137,8 @@ class DeepNeuralNetwork:
 
             else:
                 dZa = np.matmul(weights['W{}'.format(i + 2)].T, dZ)
-                if self.__activation == 'sig':
-                    dZb = (cache['A{}'.format(i + 1)]
-                           * (1 - cache['A{}'.format(i + 1)]))
-                else:
-                    dZb = 1 - cache['A{}'.format(i + 1)] ** 2
+                dZb = (cache['A{}'.format(i + 1)]
+                       * (1 - cache['A{}'.format(i + 1)]))
                 dZ = dZa * dZb
 
             dW = (np.matmul(dZ, cache['A{}'.format(i)].T)) / m
