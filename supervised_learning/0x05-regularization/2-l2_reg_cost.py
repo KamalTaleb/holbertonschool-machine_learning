@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Contains the l2_reg_cost function"""
 
+
 import tensorflow as tf
 
 
