@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Contains the l2_reg_create_layer function"""
 
+
 import tensorflow as tf
 
 
@@ -13,12 +14,12 @@ def l2_reg_create_layer(prev, n, activation, lambtha):
     :param lambtha: L2 regularization parameter
     :return: output of the new layer
     """
-    reg = tf.contrib.layers.l2_regularizer(lambtha)
+    reg = tf.contrib.layers.l2_regularizer(scale=lambtha)
     init = tf.contrib.layers.variance_scaling_initializer(mode="FAN_AVG")
 
-    model = tf.layers.Dense(units=n,
+    layer = tf.layers.Dense(units=n,
                             activation=activation,
                             kernel_initializer=init,
                             kernel_regularizer=reg)
 
-    return model(prev)
+    return layer(prev)
