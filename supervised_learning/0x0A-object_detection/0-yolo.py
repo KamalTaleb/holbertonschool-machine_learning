@@ -14,14 +14,14 @@ class Yolo:
         """
         class constructor
         :param self:
-        :param model_path: path to where a Darknet Keras model is stored
-        :param classes_path: path to where the list of class names used
+        :param model_path: is the path to where a Darknet Keras model is stored
+        :param classes_path: is the path to where the list of class names used
             for the Darknet model, listed in order of index, can be found
-        :param class_t: float representing the box score threshold
+        :param class_t: is a float representing the box score threshold
             for the initial filtering step
-        :param nms_t: float representing the IOU threshold
+        :param nms_t: is a float representing the IOU threshold
             for non-max suppression
-        :param anchors: numpy.ndarray of shape (outputs, anchor_boxes, 2)
+        :param anchors: is a numpy.ndarray of shape (outputs, anchor_boxes, 2)
             containing all of the anchor boxes:
             outputs is the number of outputs (predictions)
                 made by the Darknet model
