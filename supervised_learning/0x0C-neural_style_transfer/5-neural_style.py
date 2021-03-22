@@ -187,8 +187,25 @@ class NST:
             for the generated image
         :return: style cost
         """
-       if type(style_outputs) is not list or len(style_outputs) != len(self.style_layers):
-            raise TypeError('style_outputs must be a list with a length of {}'.format(len(self.style_layers)))
-        style_cost = tf.add_n([self.layer_style_cost(style_outputs[i], self.gram_style_features[i]) for i in range(len(style_outputs))])
-        style_cost /= tf.cast(len(style_outputs), tf.float32)
+        my_length = len(self.style_layers)
+        err = \
+            'style_outputs must be a list with a length of {}'. \
+            format(my_length)
+        if (not type(style_outputs) is list
+                or len(self.style_layers) != len(style_outputs)):
+            raise TypeError(err)
+
+        # each layer should be weighted evenly with
+        # all weights summing to 1
+        weight = 1.0 / float(my_length)
+
+        # initialize style cost
+        style_cost = 0.0
+
+        # add over style layers
+        for img_style, target_style in \
+                zip(style_outputs, self.gram_style_features):
+            layer_cost = self.layer_style_cost(img_style, target_style)
+            style_cost = style_cost + weight * layer_cost
+
         return style_cost
