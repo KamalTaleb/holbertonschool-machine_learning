@@ -7,7 +7,9 @@ import matplotlib.pyplot as plt
 
 
 class NST:
-    """NST class, performs neural style transfer"""
+    """
+    NST class, performs neural style transfer
+    """
     style_layers = ['block1_conv1', 'block2_conv1',
                     'block3_conv1', 'block4_conv1',
                     'block5_conv1']
@@ -185,6 +187,7 @@ class NST:
 
     def layer_style_cost(self, style_output, gram_target):
         """
+
         :param style_output: tf.Tensor of shape (1, h, w, c)
             containing the layer style output of the generated image
         :param gram_target: tf.Tensor of shape (1, c, c)
@@ -238,6 +241,7 @@ class NST:
 
     def content_cost(self, content_output):
         """
+
         :param content_output: tf.Tensor containing
         the content output for the generated image
         :return: content cost
@@ -258,6 +262,7 @@ class NST:
 
     def total_cost(self, generated_image):
         """
+
         :param generated_image: tf.Tensor of shape (1, nh, nw, 3)
         containing the generated image
         :return: J, J_content, J_style, J_var)
@@ -288,6 +293,7 @@ class NST:
 
     def compute_grads(self, generated_image):
         """
+
         :param generated_image: tf.Tensor generated image of
             shape (1, nh, nw, 3)
         :return: gradients, J_total, J_content, J_style
