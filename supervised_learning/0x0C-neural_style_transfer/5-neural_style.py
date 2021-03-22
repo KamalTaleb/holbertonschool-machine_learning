@@ -187,25 +187,15 @@ class NST:
             for the generated image
         :return: style cost
         """
-        my_length = len(self.style_layers)
-        err = \
-            'style_outputs must be a list with a length of {}'. \
-            format(my_length)
         if (not type(style_outputs) is list
-                or len(self.style_layers) != len(style_outputs)):
-            raise TypeError(err)
+           or len(self.style_layers) != len(style_outputs)):
+            le = len(self.style_layers)
+            m = "style_outputs must be a list with a length of {}".format(le)
+            raise TypeError(m)
+        weight_per_style_layer = 1.0 / float(len(self.style_layers))
+        loss = 0.0
+        for target, style in zip(self.gram_style_features, style_outputs):
+            loss = loss + (self.layer_style_cost(style, target)
+                           * weight_per_style_layer)
 
-        # each layer should be weighted evenly with
-        # all weights summing to 1
-        weight = 1.0 / float(my_length)
-
-        # initialize style cost
-        style_cost = 0.0
-
-        # add over style layers
-        for img_style, target_style in \
-                zip(style_outputs, self.gram_style_features):
-            layer_cost = self.layer_style_cost(img_style, target_style)
-            style_cost = style_cost + weight * layer_cost
-
-        return style_cost
+        return loss
