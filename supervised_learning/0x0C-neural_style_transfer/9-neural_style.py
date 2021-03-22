@@ -379,7 +379,5 @@ class NST:
                          "Content cost: {}, Style cost: {}"
                          .format(i, J_total, J_content, J_style))
                     print(m)
-                    plt.imshow(best_img[-1, :, :])
-                    plt.show()
 
         return best_img[-1, :, :], best_loss
