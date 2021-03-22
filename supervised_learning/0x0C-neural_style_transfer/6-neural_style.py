@@ -6,7 +6,9 @@ import tensorflow as tf
 
 
 class NST:
-    """NST class performs tasks for neural style transfer"""
+    """
+    NST class performs tasks for neural style transfer
+    """
     style_layers = ['block1_conv1', 'block2_conv1',
                     'block3_conv1', 'block4_conv1', 'block5_conv1']
     content_layer = 'block5_conv2'
@@ -226,6 +228,7 @@ class NST:
         if len(content_output.shape) == 3:
             content_output = tf.expand_dims(content_output, 0)
 
-        content_cost = \ tf.reduce_mean(tf.square(content_output - self.content_feature))
+        content_cost = \
+            tf.reduce_mean(tf.square(content_output - self.content_feature))
 
         return content_cost
