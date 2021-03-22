@@ -3,7 +3,6 @@
 
 import numpy as np
 import tensorflow as tf
-import matplotlib.pyplot as plt
 
 
 class NST:
@@ -390,7 +389,5 @@ class NST:
                          "Variational cost: {}"
                          .format(i, J_total, J_content, J_style, J_var))
                     print(m)
-                    plt.imshow(best_img[-1, :, :])
-                    plt.show()
 
         return best_img[-1, :, :], best_loss
