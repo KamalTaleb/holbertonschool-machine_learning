@@ -6,9 +6,7 @@ import tensorflow as tf
 
 
 class NST:
-    """
-    NST class performs tasks for neural style transfer
-    """
+    """NST class performs tasks for neural style transfer"""
     style_layers = ['block1_conv1', 'block2_conv1',
                     'block3_conv1', 'block4_conv1', 'block5_conv1']
     content_layer = 'block5_conv2'
@@ -58,7 +56,6 @@ class NST:
     @staticmethod
     def scale_image(image):
         """
-
         :param image: numpy.ndarray of shape (h, w, 3)
             containing the image to be scaled
         :return:
@@ -121,7 +118,6 @@ class NST:
     @staticmethod
     def gram_matrix(input_layer):
         """
-
         :param input_layer: an instance of tf.Tensor or
             tf.Variable of shape (1, h, w, c)containing the
             layer output whose gram matrix should be calculated
@@ -161,7 +157,6 @@ class NST:
 
     def layer_style_cost(self, style_output, gram_target):
         """
-
         :param style_output: tf.Tensor of shape (1, h, w, c)
             containing the layer style output of the generated image
         :param gram_target: tf.Tensor of shape (1, c, c)
@@ -185,7 +180,6 @@ class NST:
 
     def style_cost(self, style_outputs):
         """
-
         :param style_outputs: list of tf.Tensor style outputs
             for the generated image
         :return: style cost
@@ -212,7 +206,6 @@ class NST:
 
     def content_cost(self, content_output):
         """
-
         :param content_output: tf.Tensor containing
         the content output for the generated image
         :return: content cost

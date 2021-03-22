@@ -6,9 +6,7 @@ import tensorflow as tf
 
 
 class NST:
-    """
-    NST class performs tasks for neural style transfer
-    """
+    """NST class performs tasks for neural style transfer"""
     style_layers = ['block1_conv1', 'block2_conv1',
                     'block3_conv1', 'block4_conv1', 'block5_conv1']
     content_layer = 'block5_conv2'
@@ -52,7 +50,6 @@ class NST:
     @staticmethod
     def scale_image(image):
         """
-
         :param image: numpy.ndarray of shape (h, w, 3)
             containing the image to be scaled
         :return:
